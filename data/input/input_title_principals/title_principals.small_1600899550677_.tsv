@@ -1,0 +1,47 @@
+tconst	ordering	nconst	category	job	characters
+tt10478526	1	nm10874209	actress	\N	["Huldra"]
+tt10478526	2	nm10781064	actor	\N	["Photographer"]
+tt10478526	3	nm9606285	director	\N	\N
+tt10478526	4	nm8278608	composer	\N	\N
+tt10478526	5	nm10912472	cinematographer	\N	\N
+tt10478526	6	nm1993420	editor	\N	\N
+tt3841568	10	nm2835957	self	\N	["Self"]
+tt3841568	1	nm6177107	self	\N	["Self - Photographer"]
+tt3841568	2	nm0421063	self	\N	["Self"]
+tt3841568	3	nm2832525	self	\N	["Self"]
+tt3841568	4	nm1728539	self	\N	["Self"]
+tt3841568	5	nm1597994	composer	\N	\N
+tt3841568	6	nm3935981	editor	\N	\N
+tt3841568	7	nm4218153	editor	\N	\N
+tt3841568	8	nm2832473	self	\N	["Self"]
+tt3841568	9	nm2578007	self	\N	["Self"]
+tt12286422	1	nm11548246	actor	\N	["Ekin"]
+tt12286422	2	nm10890850	actress	\N	["Zeynep"]
+tt12286422	3	nm4908166	actress	\N	["Melek"]
+tt12286422	4	nm10748626	actor	\N	["Bawer"]
+tt12286422	5	nm11548248	writer	\N	\N
+tt12286422	6	nm11548249	composer	\N	\N
+tt12286422	7	nm10977476	editor	\N	\N
+tt12286422	8	nm11564782	actor	\N	["Baran"]
+tt12286422	9	nm11548247	actor	\N	["Inan"]
+tt2301451	10	nm1726663	composer	\N	\N
+tt2301451	1	nm0186505	actor	\N	["Walter White"]
+tt2301451	2	nm0348152	actress	\N	["Skyler White"]
+tt2301451	3	nm0666739	actor	\N	["Jesse Pinkman"]
+tt2301451	4	nm0606487	actor	\N	["Hank Schrader"]
+tt2301451	5	nm0426059	director	\N	\N
+tt2301451	6	nm0319213	writer	creator	\N
+tt2301451	7	nm0909124	writer	written by	\N
+tt2301451	8	nm0529175	producer	producer	\N
+tt2301451	9	nm1034887	producer	producer	\N
+tt12406160	10	nm10553700	actress	\N	["TV News Anchor"]
+tt12406160	1	nm9608152	actor	\N	["Congressman Werkzeug"]
+tt12406160	2	nm11617213	actor	\N	["Penis Picture Calendar Model"]
+tt12406160	3	nm9787129	actor	\N	["Clint"]
+tt12406160	4	nm11076431	actress	\N	["Jillian"]
+tt12406160	5	nm4672801	director	\N	\N
+tt12406160	6	nm11617209	actress	\N	["Sam"]
+tt12406160	7	nm10434798	actress	\N	["Kinky Karla"]
+tt12406160	8	nm11617211	actor	\N	["Tyler"]
+tt12406160	9	nm9608157	actor	\N	["Vincent The Don"]
+
