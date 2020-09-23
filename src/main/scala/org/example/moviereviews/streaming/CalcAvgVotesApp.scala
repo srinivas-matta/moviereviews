@@ -15,8 +15,8 @@ object CalcAvgVotesApp {
     Logger.getLogger("org.apache.spark").setLevel(Level.WARN)
 
     val config = ConfigFactory.parseFile(new File("application.conf")).getConfig("moviereviews.avgvotes")
-    val spark = SparkSession.builder().master("local").appName("CalcAvgVotesApp").getOrCreate()
-    print("config :"+config)
+    val spark = SparkSession.builder().master(config.getString("master")).appName("CalcAvgVotesApp").getOrCreate()
+
     startStreaming(spark, config)
   }
 

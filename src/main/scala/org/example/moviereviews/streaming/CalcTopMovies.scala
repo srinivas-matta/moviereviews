@@ -15,9 +15,9 @@ object CalcTopMovies {
   def main(args: Array[String]): Unit = {
     //limiting logs to warning.
     Logger.getLogger("org.apache.spark").setLevel(Level.WARN)
-
-    val spark = SparkSession.builder().master("local").appName("CalcTopMovies").getOrCreate()
     val config = ConfigFactory.parseFile(new File("application.conf")).getConfig("moviereviews").getConfig("top_movies")
+    val spark = SparkSession.builder().master(config.getString("master")).appName("CalcTopMovies").getOrCreate()
+
     startStreaming(spark, config)
   }
 

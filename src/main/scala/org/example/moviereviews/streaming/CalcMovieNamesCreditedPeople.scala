@@ -14,7 +14,7 @@ object CalcMovieNamesCreditedPeople {
     //limiting logs to warning.
     Logger.getLogger("org.apache.spark").setLevel(Level.WARN)
     val config = ConfigFactory.parseFile(new File("application.conf")).getConfig("moviereviews").getConfig("movienanes_creditedpeople")
-    val spark = SparkSession.builder().master("local").appName("CalcMovieNamesCreditedPeople").getOrCreate()
+    val spark = SparkSession.builder().master(config.getString("master")).appName("CalcMovieNamesCreditedPeople").getOrCreate()
 
     startStreaming(spark, config)
   }
