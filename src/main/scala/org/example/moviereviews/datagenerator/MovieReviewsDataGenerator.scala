@@ -22,12 +22,12 @@ object MovieReviewsDataGenerator extends App {
 
   val copyFilesThread  = new Thread(){
     override def run(): Unit = {
-      for(i <- 1 to 2) {
+      for(i <- 1 to 10) {
         copyRenameFile(source_title_ratings, "data/input/input_title_ratings/"+"title_ratings.small_"+System.currentTimeMillis()+"_.tsv" )
         copyRenameFile(source_principals, "data/input/input_title_principals/"+"title_principals.small_"+System.currentTimeMillis()+"_.tsv" )
         copyRenameFile(source_basics, "data/input/input_title_basics/"+"title_basics.small_"+System.currentTimeMillis()+"_.tsv" )
         copyRenameFile(source_akas, "data/input/input_title_akas/"+"title_akas.small_"+System.currentTimeMillis()+"_.tsv" )
-        Thread.sleep(5000)
+        Thread.sleep(10000)
       }
     }
   }

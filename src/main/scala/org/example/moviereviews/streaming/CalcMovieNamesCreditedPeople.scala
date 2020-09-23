@@ -1,7 +1,9 @@
 package org.example.moviereviews.streaming
 
+import java.io.File
 import java.sql.Timestamp
 
+import com.typesafe.config.{Config, ConfigFactory}
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions.lit
@@ -9,19 +11,24 @@ import org.apache.spark.sql.streaming.{OutputMode, Trigger}
 
 object CalcMovieNamesCreditedPeople {
   def main(args: Array[String]): Unit = {
+    //limiting logs to warning.
     Logger.getLogger("org.apache.spark").setLevel(Level.WARN)
-
+    val config = ConfigFactory.parseFile(new File("application.conf")).getConfig("moviereviews").getConfig("movienanes_creditedpeople")
     val spark = SparkSession.builder().master("local").appName("CalcMovieNamesCreditedPeople").getOrCreate()
+
+    startStreaming(spark, config)
+  }
+
+  def startStreaming(spark : SparkSession, config : Config): Unit = {
 
     spark.sql("set spark.sql.streaming.schemaInference=true")
 
-    val titlePrincipalsPath = "data/input/input_title_principals/"
-    val titleBasicsPath = "data/input/input_title_basics/"
-    val topMoviesPath = "data/output/top_movies"
-    val waterMarkDelay = "5 seconds"
-    val triggerTimeInterval = "5 seconds"
-    val checkPointPath ="checkpoint/movienanes_creditedpeople"
-
+    val titlePrincipalsPath = config.getString("titlePrincipalsPath")
+    val titleBasicsPath = config.getString("titleBasicsPath")
+    val topMoviesPath = config.getString("topMoviesPath")
+    val waterMarkDelay = config.getString("waterMarkDelay")
+    val triggerTimeInterval = config.getString("triggerTimeInterval")
+    val checkPointPath = config.getString("checkPointPath")
 
     val principalsDF = spark.readStream.format("csv").option("sep", "\t").option("header", true)
       .schema(MovieDataSchemas.principalSchema).load(titlePrincipalsPath)

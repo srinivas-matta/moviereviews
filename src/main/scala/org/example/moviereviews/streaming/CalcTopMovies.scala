@@ -1,33 +1,38 @@
 package org.example.moviereviews.streaming
 
+import java.io.File
 import java.sql.Timestamp
 
+import com.typesafe.config.{Config, ConfigFactory}
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.sql.functions.{desc, lit}
 import org.apache.spark.sql.streaming.{OutputMode, Trigger}
 import org.apache.spark.sql.{DataFrame, SparkSession}
 import org.apache.spark.sql.functions.udf
-import org.apache.spark.sql.types.{DoubleType, IntegerType, StringType, StructField, StructType}
 
 object CalcTopMovies {
+
   def main(args: Array[String]): Unit = {
+    //limiting logs to warning.
     Logger.getLogger("org.apache.spark").setLevel(Level.WARN)
 
     val spark = SparkSession.builder().master("local").appName("CalcTopMovies").getOrCreate()
+    val config = ConfigFactory.parseFile(new File("application.conf")).getConfig("moviereviews").getConfig("top_movies")
+    startStreaming(spark, config)
+  }
+
+  def startStreaming(spark: SparkSession, config: Config): Unit = {
 
     spark.sql("set spark.sql.streaming.schemaInference=true")
 
-    val titleRatingsPath = "data/input/input_title_ratings"
-    val titleAkasPath = "data/input/input_title_akas"
-    val averageVotesPath = "data/output/average_number_of_votes"
-    val topMoviesPath = "data/output/top_movies"
-    val waterMarkDelay = "5 seconds"
-    val triggerTimeInterval = "5 seconds"
-    val checkPointPath = "checkpoint/topmovies"
-    val numberOfTopMovies = 10
-
-
-
+    val titleRatingsPath = config.getString("titleRatingsPath")
+    val titleAkasPath = config.getString("titleAkasPath")
+    val averageVotesPath = config.getString("averageVotesPath")
+    val topMoviesPath = config.getString("topMoviesPath")
+    val waterMarkDelay = config.getString("waterMarkDelay")
+    val triggerTimeInterval = config.getString("triggerTimeInterval")
+    val checkPointPath = config.getString("checkPointPath")
+    val numberOfTopMovies = config.getInt("numberOfTopMovies")
 
     val titleRatingsDF = spark.readStream.format("csv").option("sep", "\t").option("header", true).schema(MovieDataSchemas.titleRatingsSchema).load(titleRatingsPath).
       withColumn("dummy", lit("1"))
@@ -72,7 +77,6 @@ object CalcTopMovies {
       .join(titleAkasDF, titleRatingsDF.col("tconst") === titleAkasDF.col("titleId"))
 
     val joinedStream = joinedDS.writeStream
-      // .format("console")
       .outputMode(OutputMode.Append())
       .queryName("TopMovies")
       .option("checkpointLocation", checkPointPath)
@@ -83,7 +87,6 @@ object CalcTopMovies {
       .start()
 
     joinedStream.awaitTermination()
-
 
   }
 }
