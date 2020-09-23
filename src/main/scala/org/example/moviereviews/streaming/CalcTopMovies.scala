@@ -58,12 +58,10 @@ object CalcTopMovies {
     val calcTopMovies = (present_df: DataFrame, batchId: Long) => {
       if (!present_df.isEmpty) {
         val topMoviesDF = present_df.orderBy(desc("ratingRank")).cache()
-        val top10Movies = topMoviesDF.groupBy("titleId").count().select("titleId").limit(numberOfTopMovies)
-        print("top 10 movies")
-        top10Movies.show()
+        val limitedTopMoviesDF = topMoviesDF.groupBy("titleId").count().select("titleId").limit(numberOfTopMovies)
 
-        print("top 10 movies with different titles")
-        val topMoviesDF_ = topMoviesDF.join(top10Movies, "titleId").select("tconst", "averageRating", "numVotes", "ratingRank", "titleId", "title", "region").dropDuplicates()
+        print("top movies with different titles")
+        val topMoviesDF_ = topMoviesDF.join(limitedTopMoviesDF, "titleId").select("tconst", "averageRating", "numVotes", "ratingRank", "titleId", "title", "region").dropDuplicates()
         topMoviesDF_.show()
         //writing results to files.
         topMoviesDF_.coalesce(1).write.option("header", "true").csv(topMoviesPath + "/" + System.currentTimeMillis())
